@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="albom.dll" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/albom" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-DBUILD_DLL" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="user32" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/albom" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Wall" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="user32" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c99" />
+			<Add option="-static-libgcc" />
+		</Compiler>
+		<Linker>
+			<Add option="-static-libgcc -static-libstdc++" />
+		</Linker>
+		<Unit filename="data_filter_freq_resp.h" />
+		<Unit filename="data_filter_func.h" />
+		<Unit filename="data_phi_0_20_0001.h" />
+		<Unit filename="data_pulse_character_0_900_1.h" />
+		<Unit filename="direct.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="direct.h" />
+		<Unit filename="filters.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="filters.h" />
+		<Unit filename="header.h" />
+		<Unit filename="integer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="integer.h" />
+		<Unit filename="ionogram.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ionogram.h" />
+		<Unit filename="myfiles.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="myfiles.h" />
+		<Unit filename="mymath.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mymath.h" />
+		<Unit filename="mytime.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mytime.h" />
+		<Unit filename="seans.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="seans.h" />
+		<Unit filename="seans2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="seans2.h" />
+		<Unit filename="seans3.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="seans3.h" />
+		<Unit filename="seans3c3.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="seans3c3.h" />
+		<Unit filename="seansH.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="seansH.h" />
+		<Unit filename="seansRd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="seansRd.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
