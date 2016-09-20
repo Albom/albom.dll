@@ -284,4 +284,22 @@ int date_next(int *day, int *month, int *year) {
 
 //=========================
 
+int time_linear(double *arr, int length){
+for (int t = 1; t < length; t++){
+    while (arr[t] < arr[t-1]){
+        arr[t] += 24.0;
+    }
+}
+return length;
+}
 
+//=========================
+
+int time_normalize(double *arr, int length){
+for (int t = 0; t < length; t++){
+    while (arr[t] > 24.0){
+        arr[t] -= 24.0;
+    }
+}
+return length;
+}

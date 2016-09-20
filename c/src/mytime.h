@@ -34,6 +34,8 @@ DLL_EXPORT int date_valid(int day, int month, int year);
 DLL_EXPORT int time_from_str(int *hh, int *mm, int *ss, const char *timestr);
 DLL_EXPORT void tdatetime_2date(double tdatetime, int *DD, int *MM, int *YY, int *hh, int *mm, int *ss, int *ms);
 DLL_EXPORT int date_from_str(int *dd, int *mm, int *yy, const char *datestr);
+DLL_EXPORT int time_linear(double *arr, int length);
+DLL_EXPORT int time_normalize(double *arr, int length);
 #ifdef __cplusplus
 }
 #endif

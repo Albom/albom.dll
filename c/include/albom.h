@@ -311,6 +311,5 @@ extern "C"  int date_next(int *day, int *month, int *year);
 extern "C"  int date_valid(int day, int month, int year);
 extern "C"  int time_from_str(int *hh, int *mm, int *ss, const char *timestr);
 extern "C"  void tdatetime_2date(double tdatetime, int *DD, int *MM, int *YY, int *hh, int *mm, int *ss, int *ms);
-
-
-		
+extern "C"  int time_linear(double *arr, int length);
+extern "C"  int time_normalize(double *arr, int length);
