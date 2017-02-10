@@ -111,7 +111,7 @@ double spectrum_2(double m1, double m2, double g1, double ti, double te, double 
     theta_int1 = (int)(theta*1000);
 
     if (theta*sqrt_m2m1 > 19.999)
-        theta_int2 = (int)(19.999*1000);
+        theta_int2 = 19999;
     else
         theta_int2 = (int)(theta*sqrt_m2m1*1000);
 
@@ -198,12 +198,12 @@ double spectrum_3(double m1, double m2, double m3, double g1, double g2, double 
     theta_int1 = (int)(theta*1000);
 
     if (theta*sqrt_m2m1 > 19.999)
-        theta_int2 = (int)(19.999*1000);
+        theta_int2 = 19999;
     else
         theta_int2 = (int)(theta*sqrt_m2m1*1000);
 
     if (theta*sqrt_m3m1 > 19.999)
-        theta_int3 = (int)(19.999*1000);
+        theta_int3 = 19999;
     else
         theta_int3 = (int)(theta*sqrt_m3m1*1000);
 
@@ -293,9 +293,9 @@ int acf_3_full_millstone(double m1, double m2, double m3, double g1, double g2, 
     {
     int i, j;
 
-    const int num_of_harm = 5000;
+    const int num_of_harm = 10000;
     const double df = 3;
-    double spectrum[num_of_harm];
+    double *spectrum = (double*)malloc(num_of_harm*sizeof(double));
     double param = 2*M_PI*dt*df;
 
     for (i = 1; i < num_of_harm; i++)
@@ -321,7 +321,7 @@ int acf_3_full_millstone(double m1, double m2, double m3, double g1, double g2, 
         acf[j] /= acf[0];
         }
 
-
+    free(spectrum);
     return len;
     }
 
@@ -395,12 +395,12 @@ double spectrum_3_full(double m1, double m2, double m3, double g1, double g2, do
     theta_int1 = (int)(theta*1000);
 
     if (theta*sqrt_m2m1 > 19.999)
-        theta_int2 = (int)(19.999*1000);
+        theta_int2 = 19999;
     else
         theta_int2 = (int)(theta*sqrt_m2m1_1000);
 
     if (theta*sqrt_m3m1 > 19.999)
-        theta_int3 = (int)(19.999*1000);
+        theta_int3 = 19999;
     else
         theta_int3 = (int)(theta*sqrt_m3m1_1000);
 
@@ -487,12 +487,12 @@ double spectrum_3_full_millstone(double m1, double m2, double m3, double g1, dou
     theta_int1 = (int)(theta*1000);
 
     if (theta*sqrt_m2m1 > 19.999)
-        theta_int2 = (int)(19.999*1000);
+        theta_int2 = 19999;
     else
         theta_int2 = (int)(theta*sqrt_m2m1_1000);
 
     if (theta*sqrt_m3m1 > 19.999)
-        theta_int3 = (int)(19.999*1000);
+        theta_int3 = 19999;
     else
         theta_int3 = (int)(theta*sqrt_m3m1_1000);
 
