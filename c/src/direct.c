@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2011-2016, Oleksandr Bogomaz (albom85@yandex.ru)
+ * Copyright 2011-2017, Oleksandr Bogomaz (albom85@yandex.ru)
  */
 
 #include "direct.h"
@@ -289,6 +289,45 @@ int acf_3_full(double m1, double m2, double m3, double g1, double g2, double ti,
 
 ///===============================
 
+int acf_3_full_millstone(double m1, double m2, double m3, double g1, double g2, double ti, double te, double ne, int iskD, double acf[], int len, double dt)
+    {
+    int i, j;
+
+    const int num_of_harm = 5000;
+    const double df = 3;
+    double spectrum[num_of_harm];
+    double param = 2*M_PI*dt*df;
+
+    for (i = 1; i < num_of_harm; i++)
+        {
+        spectrum[i] = spectrum_3_full_millstone(m1, m2, m3, g1, g2, ti, te, ne, iskD, i*df);
+        }
+    spectrum[0] = spectrum[1];
+
+    for (j = 0 ; j < len; j++)
+        {
+        acf[j] = 0;
+        double paramj = param*j;
+        for (i = 0 ; i < num_of_harm-2; i+=2)
+            {
+            acf[j] += (spectrum[i]*cos(paramj*i)+
+                       4*spectrum[i+1]*cos(paramj*(i+1))
+                       +spectrum[i+2]*cos(paramj*(i+2)));
+            }
+        }
+
+    for (j = len-1 ; j > -1; j--)
+        {
+        acf[j] /= acf[0];
+        }
+
+
+    return len;
+    }
+
+
+///===============================
+
 double spectrum_3_full(double m1, double m2, double m3, double g1, double g2, double ti, double te, double ne, int iskD, double freq)
     {
 
@@ -334,6 +373,98 @@ double spectrum_3_full(double m1, double m2, double m3, double g1, double g2, do
 
     alpha = WAVELENGTH/(4*M_PI)*sqrt(ATOMIC_CONSTANT*m1/(2*BOLTZMANN*ti));
     koefDeby = (4*M_PI*WAVELENGTH)*(4*M_PI*WAVELENGTH)*EPSILON0*BOLTZMANN/(CHARGE_ELECTRON*CHARGE_ELECTRON);
+    if (ne < 1)
+        ne = 1;
+    Deby = koefDeby*te/ne;
+
+    OtnoshMassElect = MASS_ELECTRON/(ATOMIC_CONSTANT*m1);
+    KorenOtnoshMassElect = sqrt(OtnoshMassElect);
+
+
+    theta = 2*M_PI*alpha*freq;
+
+    if (theta < 0)
+        theta = 0;
+
+    if (theta > 19.999)
+        theta = 19.999;
+
+    theta2 = theta*theta;
+    theta_sqrt_pi = theta*M_SQRTPI;
+
+    theta_int1 = (int)(theta*1000);
+
+    if (theta*sqrt_m2m1 > 19.999)
+        theta_int2 = (int)(19.999*1000);
+    else
+        theta_int2 = (int)(theta*sqrt_m2m1_1000);
+
+    if (theta*sqrt_m3m1 > 19.999)
+        theta_int3 = (int)(19.999*1000);
+    else
+        theta_int3 = (int)(theta*sqrt_m3m1_1000);
+
+    RealYelect = theta_sqrt_pi*KorenOtnoshMassElect*pow(t, -0.5)*exp(-OtnoshMassElect*theta2/t);
+
+    modYelectKvadr = (1+RealYelect*RealYelect);
+
+    sumRealYion = g1*theta_sqrt_pi*1*exp(-1*theta2) + g2*theta_sqrt_pi*sqrt_m2m1*exp(-m2m1*theta2) + g3*theta_sqrt_pi*sqrt_m3m1*exp(-m3m1*theta2) ;
+    sumImagYion = g1*(1-PHI_0_20_0001[theta_int1]) + g2*(1-PHI_0_20_0001[theta_int2]) + g3*(1-PHI_0_20_0001[theta_int3]) ;
+
+    tsumRealYion = t*sumRealYion;
+    tsumImagYion = t*sumImagYion;
+
+    return ( modYelectKvadr*sumRealYion + (tsumRealYion*tsumRealYion + (tsumImagYion+iskD*Deby)*(tsumImagYion+iskD*Deby)) * RealYelect ) / ( ((RealYelect+tsumRealYion)*(RealYelect+tsumRealYion) + (1+tsumImagYion+iskD*Deby)*(1+tsumImagYion+iskD*Deby) )*theta ) ;
+
+    }
+
+///===============================
+
+double spectrum_3_full_millstone(double m1, double m2, double m3, double g1, double g2, double ti, double te, double ne, int iskD, double freq)
+    {
+
+    double g3;
+    double m2m1;
+    double m3m1;
+    double sqrt_m2m1;
+    double sqrt_m3m1;
+    double sqrt_m2m1_1000;
+    double sqrt_m3m1_1000;
+    int theta_int1;
+    int theta_int2;
+    int theta_int3;
+
+    double alpha, theta;
+    double theta2; // theta^2
+    double theta_sqrt_pi; // theta*M_SQRTPI
+    double t; // te/ti
+
+    double OtnoshMassElect;
+    double KorenOtnoshMassElect;
+    double RealYelect;
+    double sumRealYion;
+    double sumImagYion;
+    double tsumRealYion;
+    double tsumImagYion;
+    double modYelectKvadr;
+    double koefDeby;
+    double Deby;
+
+    if (freq < 0.01)
+        freq = 0.01;
+
+    g3 = 1 - g1 - g2;
+    t = te/ti;
+
+    m2m1 = m2/m1;
+    m3m1 = m3/m1;
+    sqrt_m2m1 = sqrt(m2m1);
+    sqrt_m3m1 = sqrt(m3m1);
+    sqrt_m2m1_1000 = sqrt_m2m1*1000;
+    sqrt_m3m1_1000 = sqrt_m3m1*1000;
+
+    alpha = WAVELENGTH_MILLSTONE/(4*M_PI)*sqrt(ATOMIC_CONSTANT*m1/(2*BOLTZMANN*ti));
+    koefDeby = (4*M_PI*WAVELENGTH_MILLSTONE)*(4*M_PI*WAVELENGTH_MILLSTONE)*EPSILON0*BOLTZMANN/(CHARGE_ELECTRON*CHARGE_ELECTRON);
     if (ne < 1)
         ne = 1;
     Deby = koefDeby*te/ne;

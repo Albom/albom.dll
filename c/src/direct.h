@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2011-2016, Oleksandr Bogomaz (albom85@yandex.ru)
+ * Copyright 2011-2017, Oleksandr Bogomaz (albom85@yandex.ru)
  */
 
 #ifndef _Included_direct
@@ -56,6 +56,9 @@ DLL_EXPORT int acf_3(double m1, double m2, double m3, double g1, double g2, doub
 
 DLL_EXPORT double spectrum_3_full(double m1, double m2, double m3, double g1, double g2, double ti, double te, double ne, int iskD, double freq);
 DLL_EXPORT int acf_3_full(double m1, double m2, double m3, double g1, double g2, double ti, double te, double ne, int iskD, double acf[], int len, double dt);
+
+DLL_EXPORT double spectrum_3_full_millstone(double m1, double m2, double m3, double g1, double g2, double ti, double te, double ne, int iskD, double freq);
+DLL_EXPORT int acf_3_full_millstone(double m1, double m2, double m3, double g1, double g2, double ti, double te, double ne, int iskD, double acf[], int len, double dt);
 
 DLL_EXPORT int acf_library_light_short(FILE *f, int *temperatures, int temperatures_len, double ti, double te, double *acf, int len);
 DLL_EXPORT int acf_library_light_short_conv(FILE *f, int *temperatures, int temperatures_len, double ti, double te, double *acf, int len);
