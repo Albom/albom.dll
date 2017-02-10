@@ -60,6 +60,7 @@ DLL_EXPORT int acf_3_full(double m1, double m2, double m3, double g1, double g2,
 DLL_EXPORT int acf_library_light_short(FILE *f, int *temperatures, int temperatures_len, double ti, double te, double *acf, int len);
 DLL_EXPORT int acf_library_light_short_conv(FILE *f, int *temperatures, int temperatures_len, double ti, double te, double *acf, int len);
 DLL_EXPORT int library_light_list_of_temperatures_get(int *temperatures);
+DLL_EXPORT int library_light_list_of_temperatures_get2(int *temperatures);
 DLL_EXPORT int library_light_list_get(char* prefix, int he_percent_int, char *filelist);
 DLL_EXPORT int library_light_list_get_filename(char *filename, char *filelist, int num);
 

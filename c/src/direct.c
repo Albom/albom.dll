@@ -580,6 +580,26 @@ int library_light_list_of_temperatures_get(int *temperatures)
 
 ///===============================
 
+int library_light_list_of_temperatures_get2(int *temperatures)
+    {
+    int ti, te;
+    int i = 0;
+
+    for (ti = 500; ti <= 5000; ti+=20)
+        for (te = 500; te <= 5000; te+=20)
+            if ( ( (double)te/ti <= 4.0 ) && ( (double)te/ti >= 0.7 )  )
+                {
+                temperatures[i] = ti;
+                temperatures[i+1] = te;
+                i += 2;
+                }
+    temperatures[i] = 0;
+    temperatures[i+1] = 0;
+    return i/2;
+    }
+
+///===============================
+
 int library_oxygen_list_of_temperatures_get(int *temperatures)
     {
     int ti, te;
