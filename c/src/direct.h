@@ -73,6 +73,9 @@ DLL_EXPORT int acf_library_heavy(FILE *f, int *temperatures, int temperatures_le
 DLL_EXPORT int library_oxygen_list_of_temperatures_get(int *temperatures);
 DLL_EXPORT int acf_library_oxygen(FILE *f, int *temperatures, int temperatures_len, double ti, double te, double *acf, int len);
 
+DLL_EXPORT int library_millstone_list_of_temperatures_get(int *temperatures);
+DLL_EXPORT int acf_library_millstone(FILE *f, int *temperatures, int temperatures_len, double ti, double te, float *acf, int len);
+
 #ifdef __cplusplus
 }
 #endif

@@ -729,6 +729,9 @@ Declare Function acf_library_heavy Alias "acf_library_heavy" (ByVal f As FILE Pt
 Declare Function library_oxygen_list_of_temperatures_get  Alias "library_oxygen_list_of_temperatures_get" (ByVal list As Integer Ptr ) As Integer
 Declare Function acf_library_oxygen Alias "acf_library_oxygen" (ByVal f As FILE Ptr, ByVal temperatures As Integer Ptr, ByVal temperatures_len As Integer, ByVal ti As Double, ByVal te As Double, ByVal acf As Double Ptr, ByVal length As Integer) As  Integer
 
+Declare Function library_millstone_list_of_temperatures_get  Alias "library_millstone_list_of_temperatures_get" (ByVal list As Integer Ptr ) As Integer
+Declare Function acf_library_millstone Alias "acf_library_millstone" (ByVal f As FILE Ptr, ByVal temperatures As Integer Ptr, ByVal temperatures_len As Integer, ByVal ti As Double, ByVal te As Double, ByVal acf As Single Ptr, ByVal length As Integer) As  Integer
+
 End Extern
 
 ''' ===================================================================================================

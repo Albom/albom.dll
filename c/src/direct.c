@@ -687,6 +687,61 @@ int acf_library_oxygen(FILE *f, int *temperatures, int temperatures_len, double 
 
     }
 
+///===============================
+
+int acf_library_millstone(FILE *f, int *temperatures, int temperatures_len, double ti, double te, float *acf, int len)
+    {
+
+    const int nPoints = 50;
+
+    int i;
+    int ti_int, te_int;
+    int result;
+
+    if (len == 0)
+        return 0;
+
+    if (f == NULL)
+        return 0;
+
+    if (acf == NULL)
+        return 0;
+
+    if ( (ti < 400) || (ti > 5000) )
+        return 0;
+
+    if ( (te < 400) || (te > 5000) )
+        return 0;
+
+    if ((te/ti < 1) || ((te/ti) > 4.0))
+        return 0;
+
+    if (len > nPoints)
+        len = nPoints;
+
+    ti_int = ( (int)(floor(ti)) /20)*20; // округляем ti
+    te_int = ( (int)(floor(te)) /20)*20; // округляем te
+
+
+    for (i = 0; i < 2*temperatures_len-1; i+=2)
+        if ( temperatures[i] == ti_int )
+            if (temperatures[i+1] == te_int)
+                break;
+
+    if ( i/2 >= temperatures_len)
+        return 0;
+
+    result = fseek(f, (i/2)*nPoints*sizeof(float), SEEK_SET) ;
+    if (result != 0)
+        return 0;
+
+    result = fread(acf, sizeof(float), len, f) ;
+    if (result != len)
+        return 0;
+
+    return len;
+
+    }
 
 
 ///===============================
@@ -748,6 +803,27 @@ int library_oxygen_list_of_temperatures_get(int *temperatures)
     temperatures[i+1] = 0;
     return i/2;
     }
+
+///===============================
+
+int library_millstone_list_of_temperatures_get(int *temperatures)
+    {
+    int ti, te;
+    int i = 0;
+
+    for (ti = 400; ti <= 5000; ti+=20)
+        for (te = 400; te <= 5000; te+=20)
+            if ( ( (double)te/ti <= 4.0 ) && ( (double)te/ti >= 1.0 )  )
+                {
+                temperatures[i] = ti;
+                temperatures[i+1] = te;
+                i += 2;
+                }
+    temperatures[i] = 0;
+    temperatures[i+1] = 0;
+    return i/2;
+    }
+
 
 ///===============================
 
