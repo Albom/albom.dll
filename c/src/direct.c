@@ -293,8 +293,8 @@ int acf_3_full_millstone(double m1, double m2, double m3, double g1, double g2, 
     {
     int i, j;
 
-    const int num_of_harm = 10000;
-    const double df = 3;
+    const int num_of_harm = 600;
+    const double df = 100;
     double *spectrum = (double*)malloc(num_of_harm*sizeof(double));
     double param = 2*M_PI*dt*df;
 
@@ -692,7 +692,7 @@ int acf_library_oxygen(FILE *f, int *temperatures, int temperatures_len, double 
 int acf_library_millstone(FILE *f, int *temperatures, int temperatures_len, double ti, double te, float *acf, int len)
     {
 
-    const int nPoints = 50;
+    const int nPoints = 120;
 
     int i;
     int ti_int, te_int;
