@@ -15,7 +15,7 @@
 #define SPEED_OF_LIGHT      (2.99792458e8)
 
 #define FREQUENCY_KHARKIV   (158.0036e6)    // Kharkiv
-#define FREQUENCY_MILLSTONE (440.0e6)       // Millstone Hill
+#define FREQUENCY_MILLSTONE (440.2e6)       // Millstone Hill
 
 #define WAVELENGTH_KHARKIV ((double)SPEED_OF_LIGHT/(double)FREQUENCY_KHARKIV)     // Kharkiv
 #define WAVELENGTH_MILLSTONE ((double)SPEED_OF_LIGHT/(double)FREQUENCY_MILLSTONE) // Millstone Hill
