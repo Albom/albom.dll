@@ -636,6 +636,18 @@ int acf_library_light_short(FILE *f, int *temperatures, int temperatures_len, do
 int acf_library_oxygen(FILE *f, int *temperatures, int temperatures_len, double ti, double te, double *acf, int len)
     {
 
+    /*
+    // estimate number of execution
+    int n;
+    FILE *f1 = fopen("num.txt", "rt");
+    fscanf(f1, "%d", &n);
+    fclose(f1);
+    n++;
+    f1 = fopen("num.txt", "wt");
+    fprintf(f1, "%d", n);
+    fclose(f1);
+    */
+
     const int nPoints = 27;
 
     int i;
