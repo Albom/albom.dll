@@ -289,6 +289,58 @@ int acf_3_full(double m1, double m2, double m3, double g1, double g2, double ti,
 
 ///===============================
 
+int acf_3_kharkiv_22(double g1, double g2, double ti, double te, double acf[])
+    {
+    int i, j;
+    const int len = 22;
+
+    const int num_of_harm = 5000;
+    const double df = 3;
+    const double dt = 30.555e-6;
+    double spectrum[num_of_harm];
+    double param = 2*M_PI*dt*df;
+    static double **COS = NULL;
+
+    if (COS == NULL){
+        COS = (double**) malloc(num_of_harm*sizeof(double*));
+        for (int f = 0; f < num_of_harm; f++){
+            COS[f] = (double*) malloc(len*sizeof(double));
+            for (int tau = 0; tau < len; tau++){
+                COS[f][tau] = cos(param*tau*f);
+            }
+        }
+    }
+
+    for (i = 1; i < num_of_harm; i++)
+        {
+        spectrum[i] = spectrum_3_full(1, 4, 16, g1, g2, ti, te, 1, 0, i*df);
+
+        }
+    spectrum[0] = spectrum[1];
+
+    for (j = 0 ; j < len; j++)
+        {
+        acf[j] = 0;
+        for (i = 0 ; i < num_of_harm-2; i+=2)
+            {
+            acf[j] += spectrum[i]*COS[i][j]+
+                       4*spectrum[i+1]*COS[i+1][j]
+                       +spectrum[i+2]*COS[i+2][j];
+            }
+        }
+
+    for (j = len-1 ; j > -1; j--)
+        {
+        acf[j] /= acf[0];
+        }
+
+
+    return len;
+    }
+
+
+///===============================
+
 int acf_3_full_millstone(double m1, double m2, double m3, double g1, double g2, double ti, double te, double ne, int iskD, double acf[], int len, double dt)
     {
     int i, j;

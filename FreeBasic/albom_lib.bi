@@ -732,6 +732,8 @@ Declare Function acf_library_oxygen Alias "acf_library_oxygen" (ByVal f As FILE 
 Declare Function library_millstone_list_of_temperatures_get  Alias "library_millstone_list_of_temperatures_get" (ByVal list As Integer Ptr ) As Integer
 Declare Function acf_library_millstone Alias "acf_library_millstone" (ByVal f As FILE Ptr, ByVal temperatures As Integer Ptr, ByVal temperatures_len As Integer, ByVal ti As Double, ByVal te As Double, ByVal acf As Single Ptr, ByVal length As Integer) As  Integer
 
+Declare Function acf_3_kharkiv_22 Alias "acf_3_kharkiv_22" (ByVal g1 As Double, ByVal g2 As Double, ByVal ti As Double, ByVal te As Double, ByVal acf As Double Ptr) As  Integer
+
 End Extern
 
 ''' ===================================================================================================
