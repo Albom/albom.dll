@@ -310,11 +310,11 @@ int	__fourier_FFT_d
     }
 
     if (isign == -1) {     // Обратное FFT
-        for (i = 0; i < ( nn / 1 ); i++ )
+        for (i = 0; i < nn*2; i++ )
             data[i] = data[i] / nn;
     }
 
-    for( i = 0; i < ( nn / 1 ); i++ ) {
+    for( i = 0; i < nn; i++ ) {
         out1[i] = data[ i * 2 ];
         out2[i] = data[ i * 2 + 1];
     }
