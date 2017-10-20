@@ -251,7 +251,7 @@ int	__fourier_FFT_d
     double tempr, tempi, wtemp, theta, wpr, wpi, wr, wi;
     double *data;
 
-    data = (double*) malloc((nn * 2 + 1)*sizeof(double));
+    data = (double*) malloc(nn * 2 *sizeof(double));
 
     for (i = 0; i < nn; i++) {
         data[i*2] = in1[i];
@@ -264,29 +264,28 @@ int	__fourier_FFT_d
 
     while( i < n ) {
         if( j > i ) {
-            tempr = data[ i ];
-            data[ i ] = data[ j ];
-            data[ j ] = tempr;
-            tempr = data[ i + 1 ];
-            data[ i + 1 ] = data[ j + 1 ];
-            data[ j + 1 ] = tempr;
+            tempr = data[i-1];
+            data[i-1] = data[j -1];
+            data[j-1] = tempr;
+            tempr = data[i];
+            data[i] = data[j];
+            data[j] = tempr;
         }
         m = n >> 1;
         while( ( m >= 2 ) && ( j > m ) ) {
-            j = j - m;
-            m = m >> 1;
+            j -= m;
+            m >>= 1;
         }
-        j = j + m;
-        i = i + 2;
+        j += m;
+        i += 2;
     }
 
     mmax = 2;
     while( n > mmax ) {
         istep = 2 * mmax;
-        theta = 2.0 * M_PI / ( isign * mmax );
-        wtemp = sin( 0.5 * theta );
-        wpr = cos( theta );
-        wpi = sin( theta );
+        theta = -2.0 * M_PI / (isign*mmax);
+        wpr = cos(theta);
+        wpi = sin(theta);
         wr = 1.0;
         wi = 0.0;
         m = 1;
@@ -294,18 +293,18 @@ int	__fourier_FFT_d
             i = m;
             while( i < n ) {
                 j = i + mmax;
-                tempr = wr * data[ j ] - wi * data[ j + 1 ];
-                tempi = wr * data[ j + 1 ] + wi * data[ j ];
-                data[ j ] = data[ i ] - tempr;
-                data[ j + 1 ] = data[ i + 1 ] - tempi;
-                data[ i ] = data[ i ] + tempr;
-                data[ i + 1 ] = data[ i + 1 ] + tempi;
-                i = i + istep;
+                tempr = wr * data[j-1] - wi * data[j];
+                tempi = wr * data[j] + wi * data[j-1];
+                data[j-1] = data[i-1] - tempr;
+                data[j] = data[i] - tempi;
+                data[i-1] = data[i-1] + tempr;
+                data[i] = data[i] + tempi;
+                i += istep;
             }
             wtemp = wr;
             wr = wr * wpr - wi * wpi;
             wi = wi * wpr + wtemp * wpi;
-            m = m + 2;
+            m += 2;
         }
         mmax = istep;
     }
@@ -335,7 +334,7 @@ int fourier_FFT_d
     double out2[],
     int nn
 ) {
-    __fourier_FFT_d (in1, in2, out1, out2, nn, -1);
+    __fourier_FFT_d (in1, in2, out1, out2, nn, 1);
     return 0;
 }
 
@@ -349,7 +348,7 @@ int fourier_IFFT_d
     double out2[],
     int nn
 ) {
-    __fourier_FFT_d (in1, in2, out1, out2, nn, 1);
+    __fourier_FFT_d (in1, in2, out1, out2, nn, -1);
     return 0;
 }
 
