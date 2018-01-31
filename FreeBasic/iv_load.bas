@@ -12,21 +12,21 @@ Print s.nR, s.nP, s.dT
 Dim As Integer sum = 0
 For i As Integer = 0 To s.nR-1
 	sum += s.scans[i].type1 + (i Mod 7)=0
-Next	
+Next
 If sum <> 0 Then
 	Print sum
 EndIf
 
 Dim As Integer file
-file = FreeFile()
-Open "out.csv" For Output As #file
-For i As Integer = 0 To s.nP/4
-	Print #file,	s.scans[0].data1[i], ";", s.scans[1].data1[i],  ";", s.scans[2].data1[i], ";", _ 
-						s.scans[3].data1[i], ";", s.scans[4].data1[i],  ";", s.scans[5].data1[i], ";", _
-						s.scans[6].data1[i]  
+For k As Integer = 0 To 6
+	file = FreeFile()
+	Open "out"+ Str(k) +".csv" For Output As #file
+	For i As Integer = 0 To s.nP/2
+		Print #file,	i*8; "; "; s.scans[k].data1[i]
+	Next
+	Close #file
 Next
-Close #file
-	
+
 
 Print
 Print "OK"
