@@ -51,14 +51,14 @@
 		<Unit filename="data_filter_func.h" />
 		<Unit filename="data_phi_0_20_0001.h" />
 		<Unit filename="data_pulse_character_0_900_1.h" />
-		<Unit filename="direct.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="direct.h" />
 		<Unit filename="filters.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="filters.h" />
+		<Unit filename="forward.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="forward.h" />
 		<Unit filename="header.h" />
 		<Unit filename="integer.c">
 			<Option compilerVar="CC" />

@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 
-// direct.h
+// forward.h
 
 extern "C"  double spectrum_1(double m1, double ti, double te, double freq);
 extern "C"  int acf_1(double m1, double ti, double te, double acf[], int len);
