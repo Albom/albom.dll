@@ -266,6 +266,11 @@ Declare Function  seans1c_alt Alias "seans1c_alt" (ByVal H As Integer) As Double
 
 Declare Function  seans1c_test Alias "seans1c_test" ( ByVal filename As ZString Ptr) As Integer
 
+Declare Function  seans1cv_load Alias "seans1cv_load" (_
+ByVal filename As ZString Ptr, _
+ByVal seans As seans1c_data Ptr _
+) As Integer
+
 Declare Function  seans1c_load Alias "seans1c_load" (_
 ByVal filename As ZString Ptr, _
 ByVal seans As seans1c_data Ptr _
