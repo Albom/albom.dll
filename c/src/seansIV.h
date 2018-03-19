@@ -44,6 +44,7 @@ extern "C"
 #endif
 
 DLL_EXPORT int seansIV_load(char *filename, seansIV_data *seans);
+DLL_EXPORT int seansIV_close(seansIV_data *seans);
 
 #ifdef __cplusplus
 }
