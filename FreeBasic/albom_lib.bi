@@ -219,6 +219,30 @@ Type  seans1c_data Field = 1
 
 End Type
 
+Type  seans1v_data Field = 1
+
+	Dim Day1							As Integer
+	Dim Month1						As Integer
+	Dim Year1						As Integer
+	Dim Hour1						As Integer
+	Dim Minute1						As Integer
+	Dim Second1						As Integer
+
+	Dim NSeans						As Integer
+	Dim Nr0							As Integer
+	Dim Nr1							As Integer
+
+	Dim U1							As Integer
+
+	Dim Dat_cos(0 To 229, 0 To 10)	As Integer
+	Dim Dat_sin(0 To 229, 0 To 10)	As Integer
+
+	Dim Datm_cos(0 To 229)		As Integer
+	Dim Datm_sin(0 To 229)		As Integer
+
+	Dim m(0 To 229)				As Integer
+
+End Type
 
 Extern "c"
 Declare Function  seans1s_test Alias "seans1s_test" ( ByVal filename As ZString Ptr) As Integer
@@ -299,6 +323,22 @@ ByVal filename As ZString Ptr _
 Declare Function  seans1c_saveM3 Alias "seans1c_saveM3" (_
 ByVal filename As ZString Ptr, _
 ByVal seans As seans1c_data Ptr _
+) As Integer
+
+Declare Function  seans1v_test Alias "seans1v_test" ( ByVal filename As ZString Ptr) As Integer
+
+Declare Function  seans1v_load Alias "seans1v_load" (_
+ByVal filename As ZString Ptr, _
+ByVal seans As seans1v_data Ptr _
+) As Integer
+
+Declare Function  seans1v_saveM0 Alias "seans1v_saveM0" (_
+ByVal filename As ZString Ptr _
+) As Integer
+
+Declare Function  seans1v_saveM3 Alias "seans1v_saveM3" (_
+ByVal filename As ZString Ptr, _
+ByVal seans As seans1v_data Ptr _
 ) As Integer
 
 End Extern

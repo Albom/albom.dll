@@ -21,8 +21,8 @@ double seans1s_alt_front(int H) {
 
 double seans1s_alt_795(int H) {
     return seans1s_alt(H)
-           -10.5 // РёР·-Р·Р° С‚РѕРіРѕ, С‡С‚Рѕ РёРјРїСѓР»СЊСЃ РЅРµ 663, Р° 795 РјРєСЃ
-           -4.5; // РїРѕРїСЂР°РІРєР°, РѕРїСЂРµРґРµР»С‘РЅРЅР°СЏ СЌРєСЃРїРµСЂРёРјРµРЅС‚Р°Р»СЊРЅРѕ
+           -10.5 // из-за того, что импульс не 663, а 795 мкс
+           -4.5; // поправка, определённая экспериментально
 }
 
 /// =============================
@@ -68,10 +68,10 @@ int seans1s_load_header(char *filename, seans_header *header) {
     if (file == NULL)
         return 0;
 
-    fread(buffer, sizeof(char), 20, file); // СЃС‡РёС‚Р°С‚СЊ Р·Р°РіРѕР»РѕРІРѕРє С„Р°Р№Р»Р°
+    fread(buffer, sizeof(char), 20, file); // считать заголовок файла
     fclose(file);
 
-// СЂР°Р·Р±РѕСЂ Р·Р°РіРѕР»РѕРІРєР°
+// разбор заголовка
     header -> day = buffer[0]*256+buffer[1];
     header -> month = buffer[2]*256+buffer[3];
     header -> year = buffer[4]*256+buffer[5];
@@ -99,21 +99,21 @@ int seans1s_load(char *filename, seans1s_data *seans) {
     char *buffer;
     unsigned char  header[20];
     unsigned char  temp[4];
-    int mem_need; // СЃРєРѕР»СЊРєРѕ РїР°РјСЏС‚Рё РЅСѓР¶РЅРѕ РґР»СЏ Р±СѓС„РµСЂР°
+    int mem_need; // сколько памяти нужно для буфера
     int i, j;
     unsigned sm = 0;
-    int isM; // РµСЃС‚СЊ Р»Рё РјРµС‚РєРё?
+    int isM; // есть ли метки?
 
     isM = seans1s_test(filename);
     if (isM == 0)
         return 0;
 
     if ( (isM == 1) || (isM == 3) )
-        mem_need = 4*(170*18 + 680*2); // РєРѕР»РёС‡РµСЃС‚РІРѕ РЅРµРѕР±С…РѕРґРёРјРѕР№ РїР°РјСЏС‚Рё РґР»СЏ Р±СѓС„РµСЂР°
+        mem_need = 4*(170*18 + 680*2); // количество необходимой памяти для буфера
     else
-        mem_need = 4*(170*18 + 680*2) + 300 + 680*2; // РєРѕР»РёС‡РµСЃС‚РІРѕ РЅРµРѕР±С…РѕРґРёРјРѕР№ РїР°РјСЏС‚Рё РґР»СЏ Р±СѓС„РµСЂР° (СЃ СѓС‡С‘С‚РѕРј РјРµС‚РѕРє)
+        mem_need = 4*(170*18 + 680*2) + 300 + 680*2; // количество необходимой памяти для буфера (с учётом меток)
 
-    buffer = (char*) malloc( mem_need ); // РІС‹РґРµР»РёС‚СЊ РїР°РјСЏС‚СЊ РґР»СЏ Р±СѓС„РµСЂР°
+    buffer = (char*) malloc( mem_need ); // выделить память для буфера
     if (buffer == NULL)
         return 0;
 
@@ -122,7 +122,7 @@ int seans1s_load(char *filename, seans1s_data *seans) {
         return 0;
 
     if (isM != 3) {
-        fread(header, sizeof(char), 20, file); // СЃС‡РёС‚Р°С‚СЊ Р·Р°РіРѕР»РѕРІРѕРє С„Р°Р№Р»Р°
+        fread(header, sizeof(char), 20, file); // считать заголовок файла
 
         seans -> day = header[0]*256+header[1];
         seans -> month = header[2]*256+header[3];
@@ -155,7 +155,7 @@ int seans1s_load(char *filename, seans1s_data *seans) {
         seans -> u1 = 0;
     }
 
-    fread(buffer, mem_need, 1, file); // СЃС‡РёС‚Р°С‚СЊ РґР°РЅРЅС‹Рµ РІ Р±СѓС„РµСЂ
+    fread(buffer, mem_need, 1, file); // считать данные в буфер
 
     fclose (file);
 
@@ -179,7 +179,7 @@ int seans1s_load(char *filename, seans1s_data *seans) {
     }
 
     if (isM == 2) {
-        sm = 18000-20; // 20 Р±Р°Р№С‚ - Р·Р°РіРѕР»РѕРІРѕРє С„Р°Р№Р»Р°
+        sm = 18000-20; // 20 байт - заголовок файла
         for (i = 0; i < 680 ; i++) {
             seans -> m[i] = buffer[sm+1]*256+buffer[sm];
             sm += 2;
@@ -189,7 +189,7 @@ int seans1s_load(char *filename, seans1s_data *seans) {
             seans -> m[i] = 0;
     }
 
-    free(buffer); // РѕСЃРІРѕР±РѕР¶РґРµРЅРёРµ Р±СѓС„РµСЂР°
+    free(buffer); // освобождение буфера
 
     return 1;
 }
@@ -210,7 +210,7 @@ int seans1s_save(char *filename, seans1s_data *seans) {
     if (f == NULL)
         return 0;
 
-// СЃРѕР·РґР°РЅРёРµ Р·Р°РіРѕР»РѕРІРєР° С„Р°Р№Р»Р°
+// создание заголовка файла
     header[0] = ((seans -> day)/256) & 0xff;
     header[1] = (seans -> day) & 0xff;
     header[2] = ((seans -> month)/256) & 0xff;
@@ -263,7 +263,7 @@ int seans1s_save(char *filename, seans1s_data *seans) {
 /// =============================
 
 int seans1s_saveM0(char *filename) {
-    int isM; // РµСЃС‚СЊ Р»Рё РјРµС‚РєРё?
+    int isM; // есть ли метки?
     FILE *file;
 
     isM = seans1s_test(filename);
@@ -293,7 +293,7 @@ int seans1s_saveM1(char *filename, int m, int num) {
 /// =============================
 
 int seans1s_saveM2(char *filename, int m[680]) {
-    int isM; // РµСЃС‚СЊ Р»Рё РјРµС‚РєРё?
+    int isM; // есть ли метки?
 //FILE *file;
 //unsigned char buf[680*2];
 //int i;
@@ -311,7 +311,7 @@ int seans1s_saveM2(char *filename, int m[680]) {
 /// =============================
 
 int seans1s_saveM3(char *filename, seans1s_data *seans) {
-    int isM; // РµСЃС‚СЊ Р»Рё РјРµС‚РєРё?
+    int isM; // есть ли метки?
     FILE *file;
     int i;
     char buf[680*2];
@@ -352,7 +352,7 @@ int seans1s_noise(seans1s_data *seans, double *noise_acf, int len, int alt_start
     for (i = 0; i < len; i++)
         noise_acf[i] = 0;
 
-    k = 0; // РѕР±РЅСѓР»РёРј СЃС‡С‘С‚С‡РёРє РєРѕР»РёС‡РµСЃС‚РІР° "С…РѕСЂРѕС€РёС…" РІС‹СЃРѕС‚
+    k = 0; // обнулим счётчик количества "хороших" высот
     for (j = alt_start; j < alt_end; j++) {
         if (seans->m[j] == 0) {
             noise_acf[0] += seans->datp[j*4];
@@ -419,10 +419,10 @@ int seans1cv_load(char *filename, seans1c_data *seans) {
     char *buffer;
     unsigned char  header[20];
     unsigned char  temp[4];
-    int mem_need; // СЃРєРѕР»СЊРєРѕ РїР°РјСЏС‚Рё РЅСѓР¶РЅРѕ РґР»СЏ Р±СѓС„РµСЂР°
+    int mem_need; // сколько памяти нужно для буфера
     int i, j;
     unsigned sm = 0;
-    int isM; // РµСЃС‚СЊ Р»Рё РјРµС‚РєРё?
+    int isM; // есть ли метки?
 
 
     isM = seans1c_test(filename);
@@ -430,17 +430,17 @@ int seans1cv_load(char *filename, seans1c_data *seans) {
         return 0;
 
     if (isM == 2)
-        mem_need = 4*(3*360 + 360*2*6) + 30 + 360*2; // РєРѕР»РёС‡РµСЃС‚РІРѕ РЅРµРѕР±С…РѕРґРёРјРѕР№ РїР°РјСЏС‚Рё РґР»СЏ Р±СѓС„РµСЂР° (СЃ СѓС‡С‘С‚РѕРј РјРµС‚РѕРє)
+        mem_need = 4*(3*360 + 360*2*6) + 30 + 360*2; // количество необходимой памяти для буфера (с учётом меток)
     else
-        mem_need = 4*(3*360 + 360*2*6); // РєРѕР»РёС‡РµСЃС‚РІРѕ РЅРµРѕР±С…РѕРґРёРјРѕР№ РїР°РјСЏС‚Рё РґР»СЏ Р±СѓС„РµСЂР°
+        mem_need = 4*(3*360 + 360*2*6); // количество необходимой памяти для буфера
 
-    buffer = (char*) malloc( mem_need ); // РІС‹РґРµР»РёС‚СЊ РїР°РјСЏС‚СЊ РґР»СЏ Р±СѓС„РµСЂР°
+    buffer = (char*) malloc( mem_need ); // выделить память для буфера
 
     file = fopen (filename, "rb");
     if (file == NULL)
         return 0;
 
-    fread(header, 20, 1, file); // СЃС‡РёС‚Р°С‚СЊ Р·Р°РіРѕР»РѕРІРѕРє С„Р°Р№Р»Р°
+    fread(header, 20, 1, file); // считать заголовок файла
 
     seans -> day = header[0]*256+header[1];
     seans -> month = header[2]*256+header[3];
@@ -456,7 +456,7 @@ int seans1cv_load(char *filename, seans1c_data *seans) {
 
     seans -> u1 = header[18]*256+header[19];
 
-    fread(buffer, mem_need, 1, file); // СЃС‡РёС‚Р°С‚СЊ РґР°РЅРЅС‹Рµ РІ Р±СѓС„РµСЂ
+    fread(buffer, mem_need, 1, file); // считать данные в буфер
 
     fclose (file);
 
@@ -489,7 +489,7 @@ int seans1cv_load(char *filename, seans1c_data *seans) {
     }
 
     if (isM == 2) {
-        //sm = 21650-20; // 20 Р±Р°Р№С‚ - Р·Р°РіРѕР»РѕРІРѕРє
+        //sm = 21650-20; // 20 байт - заголовок
         sm += 30;
         for (i = 0; i < 360 ; i++) {
             seans -> m[i] = buffer[sm+1]*256+buffer[sm];
@@ -499,7 +499,7 @@ int seans1cv_load(char *filename, seans1c_data *seans) {
         for (i = 0; i < 360 ; i++)
             seans -> m[i] = 0;
 
-    free(buffer); // РѕСЃРІРѕР±РѕР¶РґРµРЅРёРµ Р±СѓС„РµСЂР°
+    free(buffer); // освобождение буфера
 
     return 1;
 }
@@ -513,10 +513,10 @@ int seans1c_load(char *filename, seans1c_data *seans) {
     char *buffer;
     unsigned char  header[20];
     unsigned char  temp[4];
-    int mem_need; // СЃРєРѕР»СЊРєРѕ РїР°РјСЏС‚Рё РЅСѓР¶РЅРѕ РґР»СЏ Р±СѓС„РµСЂР°
+    int mem_need; // сколько памяти нужно для буфера
     int i, j;
     unsigned sm = 0;
-    int isM; // РµСЃС‚СЊ Р»Рё РјРµС‚РєРё?
+    int isM; // есть ли метки?
 
 
     isM = seans1c_test(filename);
@@ -524,17 +524,17 @@ int seans1c_load(char *filename, seans1c_data *seans) {
         return 0;
 
     if (isM == 2)
-        mem_need = 4*(3*360 + 360*2*6) + 30 + 360*2; // РєРѕР»РёС‡РµСЃС‚РІРѕ РЅРµРѕР±С…РѕРґРёРјРѕР№ РїР°РјСЏС‚Рё РґР»СЏ Р±СѓС„РµСЂР° (СЃ СѓС‡С‘С‚РѕРј РјРµС‚РѕРє)
+        mem_need = 4*(3*360 + 360*2*6) + 30 + 360*2; // количество необходимой памяти для буфера (с учётом меток)
     else
-        mem_need = 4*(3*360 + 360*2*6); // РєРѕР»РёС‡РµСЃС‚РІРѕ РЅРµРѕР±С…РѕРґРёРјРѕР№ РїР°РјСЏС‚Рё РґР»СЏ Р±СѓС„РµСЂР°
+        mem_need = 4*(3*360 + 360*2*6); // количество необходимой памяти для буфера
 
-    buffer = (char*) malloc( mem_need ); // РІС‹РґРµР»РёС‚СЊ РїР°РјСЏС‚СЊ РґР»СЏ Р±СѓС„РµСЂР°
+    buffer = (char*) malloc( mem_need ); // выделить память для буфера
 
     file = fopen (filename, "rb");
     if (file == NULL)
         return 0;
 
-    fread(header, 20, 1, file); // СЃС‡РёС‚Р°С‚СЊ Р·Р°РіРѕР»РѕРІРѕРє С„Р°Р№Р»Р°
+    fread(header, 20, 1, file); // считать заголовок файла
 
     seans -> day = header[0]*256+header[1];
     seans -> month = header[2]*256+header[3];
@@ -550,7 +550,7 @@ int seans1c_load(char *filename, seans1c_data *seans) {
 
     seans -> u1 = header[18]*256+header[19];
 
-    fread(buffer, mem_need, 1, file); // СЃС‡РёС‚Р°С‚СЊ РґР°РЅРЅС‹Рµ РІ Р±СѓС„РµСЂ
+    fread(buffer, mem_need, 1, file); // считать данные в буфер
 
     fclose (file);
 
@@ -574,7 +574,7 @@ int seans1c_load(char *filename, seans1c_data *seans) {
     }
 
     if (isM == 2) {
-        //sm = 21650-20; // 20 Р±Р°Р№С‚ - Р·Р°РіРѕР»РѕРІРѕРє
+        //sm = 21650-20; // 20 байт - заголовок
         sm += 30;
         for (i = 0; i < 360 ; i++) {
             seans -> m[i] = buffer[sm+1]*256+buffer[sm];
@@ -584,7 +584,7 @@ int seans1c_load(char *filename, seans1c_data *seans) {
         for (i = 0; i < 360 ; i++)
             seans -> m[i] = 0;
 
-    free(buffer); // РѕСЃРІРѕР±РѕР¶РґРµРЅРёРµ Р±СѓС„РµСЂР°
+    free(buffer); // освобождение буфера
 
     return 1;
 }
@@ -597,7 +597,7 @@ int seans1c_noise1(seans1c_data *seans, double *noise_acf, int len, int alt_star
     for (i = 0; i < len; i++)
         noise_acf[i] = 0;
 
-    k = 0; // РѕР±РЅСѓР»РёРј СЃС‡С‘С‚С‡РёРє РєРѕР»РёС‡РµСЃС‚РІР° "С…РѕСЂРѕС€РёС…" РІС‹СЃРѕС‚
+    k = 0; // обнулим счётчик количества "хороших" высот
     for (j = alt_start; j < alt_end; j++) {
         if (seans->m[j] == 0) {
             for (i = 0; i < len; i++)
@@ -626,7 +626,7 @@ int seans1c_noise2(seans1c_data *seans, double *noise_acf, int len, int alt_star
     for (i = 0; i < len; i++)
         noise_acf[i] = 0;
 
-    k = 0; // РѕР±РЅСѓР»РёРј СЃС‡С‘С‚С‡РёРє РєРѕР»РёС‡РµСЃС‚РІР° "С…РѕСЂРѕС€РёС…" РІС‹СЃРѕС‚
+    k = 0; // обнулим счётчик количества "хороших" высот
     for (j = alt_start; j < alt_end; j++) {
         if (seans->m[j] == 0) {
             for (i = 0; i < len; i++)
@@ -650,7 +650,7 @@ int seans1c_noise2(seans1c_data *seans, double *noise_acf, int len, int alt_star
 /// =============================
 
 int seans1c_saveM0(char *filename) {
-    int isM; // РµСЃС‚СЊ Р»Рё РјРµС‚РєРё?
+    int isM; // есть ли метки?
     FILE *file;
 
     isM = seans1c_test(filename);
@@ -724,30 +724,160 @@ int seans1kd_load(char *filename, seans1kd_data *seans) {
 }
 
 /// =============================
-/*
-int seans1v_test(char *filename)
-{
-FILE *file;
-long size;
 
-file = fopen (filename, "rb");
+int seans1v_test(char *filename) {
+    FILE *file;
+    long size;
 
-if (file == NULL)
+    file = fopen (filename, "rb");
+
+    if (file == NULL)
+        return 0;
+
+    fseek (file,0,SEEK_END);
+    size = ftell(file);
+
+    fclose(file);
+
+    if (size == 21200) // without labels
+        return 1;
+
+    if (size == 21430) // with labels (no compatibility with old (KENTAVR) program)
+        return 2;
+
     return 0;
-
-fseek (file,0,SEEK_END);
-size = ftell(file);
-
-fclose(file);
-
-if (size == 21200) //???
-    return 1;
-
-if (size == 22350) //???
-    return 2;
-
-return 0;
 }
-*/
+
 /// =============================
 
+int seans1v_load(char *filename, seans1v_data *seans) {
+    FILE *file;
+
+    char *buffer;
+    unsigned char  header[20];
+    int mem_need; // сколько памяти нужно для буфера
+
+    int isM; // есть ли метки?
+
+    isM = seans1v_test(filename);
+    if (isM == 0) {
+        return 0;
+    }
+
+    if (isM == 2) {
+        mem_need =  4*(230 + 230*2*10 + 230*2 + 230); // количество необходимой памяти для буфера (с учётом меток)
+    } else {
+        mem_need = 4*(230 + 230*2*10 + 230*2); // количество необходимой памяти для буфера
+    }
+
+    buffer = (char*) malloc( mem_need ); // выделить память для буфера
+
+    file = fopen (filename, "rb");
+    if (file == NULL) {
+        return 0;
+    }
+
+    fread(header, 20, 1, file); // считать заголовок файла
+
+    seans -> day = header[0]*256+header[1];
+    seans -> month = header[2]*256+header[3];
+    seans -> year = header[4]*256+header[5];
+
+    seans -> hour = header[6]*256+header[7];
+    seans -> minute = header[8]*256+header[9];
+    seans -> second = header[10]*256+header[11];
+
+    seans -> nseans = header[12]*256+header[13];
+    seans -> nr0 = header[14]*256+header[15];
+    seans -> nr1 = header[16]*256+header[17];
+
+    seans -> u1 = header[18]*256+header[19];
+
+    fread(buffer, mem_need, 1, file); // считать данные в буфер
+
+    fclose (file);
+
+    for (int i = 0; i < 230 ; i++) {
+        seans->dat_cos[i][1] = buffer[4*i*21];
+        seans->dat_sin[i][1] = buffer[4*i*21+4];
+        seans->dat_cos[i][0] = buffer[4*i*21+8];
+        seans->dat_sin[i][0] = 0;
+
+        for (int j = 2; j < 11; j++) {
+            seans->dat_cos[i][j] = buffer[4*i*21+j*4+4];
+            seans->dat_sin[i][j] = buffer[4*i*21+j*4+4];
+        }
+    }
+
+    for (int i = 0; i < 230 ; i++) {
+        seans->datm_cos[i] = buffer[4*i*2+19340];
+        seans->datm_cos[i] = buffer[4*i*2+19340+4];
+    }
+
+    if (isM == 2) {
+        for (int i = 0; i < 230 ; i++) {
+            seans->datm_cos[i] = buffer[4*i+21180];
+        }
+    }
+
+    return 1;
+}
+
+/// =============================
+
+int seans1v_saveM0(char *filename) {
+    int isM; // есть ли метки?
+    FILE *file;
+
+    isM = seans1v_test(filename);
+    if (isM == 0)
+        return 0;
+
+    if (isM == 1)
+        return 1;
+
+    file = fopen(filename, "a+b");
+    if (file == NULL)
+        return 0;
+
+    ftruncate(fileno(file), 21200);
+
+    fclose(file);
+
+    return 1;
+}
+
+/// =============================
+
+
+int seans1v_saveM3(char *filename, seans1v_data *seans) {
+    int isM; // есть ли метки?
+    FILE *file;
+
+    isM = seans1v_test(filename);
+    if (isM == 0)
+        return 0;
+
+    file = fopen (filename, "a+b");
+    if (file == NULL)
+        return 0;
+
+    ftruncate(fileno(file), 21180);
+
+    fseek(file, 0, SEEK_END);
+
+    fwrite(&seans->m, 230*4, 1, file);
+    /*
+    for (int i = 0; i < 230; i++) {
+        buf[i*2] = (seans->m[i]) & 0xff;
+        buf[i*2+1] = (seans->m[i]/256) & 0xff;
+
+
+
+    }
+    */
+
+    fclose (file);
+
+    return 1;
+}
