@@ -1,3 +1,8 @@
+
+/*
+ * Copyright 2011-2019, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
+ */
+
 #ifndef SEANSIV_H_INCLUDED
 #define SEANSIV_H_INCLUDED
 

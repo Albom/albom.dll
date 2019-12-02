@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2011-2016, Oleksandr Bogomaz (albom85@yandex.ru)
+ * Copyright 2011-2019, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
  */
 
 #include "integer.h"

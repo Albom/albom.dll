@@ -1,4 +1,8 @@
 
+/*
+ * Copyright 2011-2019, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
+ */
+
 #include <stdio.h>
 #include <time.h>
 
