@@ -1,3 +1,4 @@
 /bin/
-/obj/
-albom.layout
+*.o
+*.a
+*.dll
