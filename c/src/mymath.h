@@ -59,6 +59,7 @@ DLL_EXPORT int stat_distribution_d
         );
 
 DLL_EXPORT double  random_rnd(void);
+DLL_EXPORT int     random_rnd_int(int n);
 DLL_EXPORT int     random_randomize(int num);
 DLL_EXPORT int     random_rdtsc(void);
 
