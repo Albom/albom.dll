@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2011-2019, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
+ * Copyright 2011-2021, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
  */
 
 #include "seans.h"
