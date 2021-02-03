@@ -3,7 +3,7 @@
  * Copyright 2011-2021, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
  */
 
-#include "seansIV.h"
+#include "iv_file.h"
 
 int seansIV_load(char *filename, seansIV_data *seans)
 {

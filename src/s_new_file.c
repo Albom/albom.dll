@@ -3,7 +3,7 @@
  * Copyright 2011-2021, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
  */
 
-#include "seans2.h"
+#include "s_new_file.h"
 
 /// =============================
 

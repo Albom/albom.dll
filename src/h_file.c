@@ -3,7 +3,7 @@
  * Copyright 2011-2021, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
  */
 
-#include "seansH.h"
+#include "h_file.h"
 
 int seansH_load(char *fileName, seansH_data *seans)
 {
