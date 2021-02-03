@@ -3,7 +3,7 @@
  * Copyright 2011-2021, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
  */
 
-#include "s_new_file.h"
+#include "file_s_new.h"
 
 /// =============================
 

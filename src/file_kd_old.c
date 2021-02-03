@@ -3,7 +3,7 @@
  * Copyright 2011-2021, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
  */
 
-#include "kd_old_file.h"
+#include "file_kd_old.h"
 
 
 int seans1kd_load(char *filename, seans1kd_data *seans) {
