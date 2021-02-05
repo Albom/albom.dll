@@ -3,7 +3,7 @@
  * Copyright 2011-2021, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
  */
 
-#include "mymath.h"
+#include "math.h"
 
 #include "filters.h"
 #include "data_filter_func.h"

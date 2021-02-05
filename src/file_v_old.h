@@ -19,7 +19,6 @@
 
 #include "header.h"
 #include "integer.h"
-#include "mytime.h"
 
 
 typedef struct __attribute__((packed))

@@ -8,7 +8,7 @@
 
 #include <math.h>
 #include <string.h>
-#include "mymath.h"
+#include "math.h"
 
 #include "data_phi_0_20_0001.h"
 
