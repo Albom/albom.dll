@@ -12,15 +12,6 @@
 #endif
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/stat.h>
-
-#include "header.h"
-#include "integer.h"
-
-
 typedef struct __attribute__((packed))
 {
 int day;

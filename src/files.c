@@ -3,6 +3,14 @@
  * Copyright 2011-2021, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
  */
 
+#include <sys/types.h>
+#include <dirent.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+
 #include "files.h"
 
 /// =============================
@@ -253,7 +261,7 @@ int file_load_all_d (
 
 /// =============================
 
-int file_size (char *fname) {
+int file_size(char *fname) {
     FILE	*f;
     int     len;
 
@@ -279,10 +287,17 @@ int buffer_clear(char *buf) {
 /// =============================
 
 int buffer_add_s(char *buf, char *in, char *format) {
-    char *tmp;
-    tmp = (char*) malloc(4096);
-    if ( (tmp == NULL) || (buf == NULL) )
+
+
+	if (buf == NULL) {
+		return 0;
+	}
+
+    char* tmp = (char*) malloc(4096);
+    if (tmp == NULL) {
         return 0;
+	}
+
     sprintf(tmp, format, in);
     strcat(buf, tmp);
     free(tmp);
@@ -310,14 +325,16 @@ int buffer_add_i(
     char *format
 ) {
 
-    int	i;
-    char *tmp;
+	if (buf == NULL) {
+		return 0;
+	}
 
-    tmp = (char*) malloc(4096);
-    if ( (tmp == NULL) || (buf == NULL) )
+    char* tmp = (char*) malloc(4096);
+    if (tmp == NULL) {
         return 0;
+	}
 
-    for (i = 0; i < il; i++) {
+    for (int i = 0; i < il; i++) {
         sprintf(tmp, format, *(in+i));
         strcat(buf, tmp);
     }
@@ -334,14 +351,17 @@ int buffer_add_d(
     int il,
     char *format
 ) {
-    int	i;
-    char *tmp;
 
-    tmp = (char*) malloc(4096);
-    if ( (tmp == NULL) || (buf == NULL) )
+	if (buf == NULL) {
+		return 0;
+	}
+
+    char* tmp = (char*) malloc(4096);
+    if (tmp == NULL) {
         return 0;
+	}
 
-    for (i = 0; i < il; i++) {
+    for (int i = 0; i < il; i++) {
         sprintf(tmp, format, *(in+i));
         strcat(buf, tmp);
     }

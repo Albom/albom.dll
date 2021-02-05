@@ -3,7 +3,9 @@
  * Copyright 2011-2021, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
  */
 
+#include "time.h"
 #include "file_s_old.h"
+
 
 /// =============================
 
@@ -145,8 +147,16 @@ int seans1s_load(char *filename, seans1s_data *seans) {
             return 0;
         }
 
-        unixtime_2date(st.st_mtime, &seans -> day, &seans -> month, &seans -> year,
-                       &seans -> hour, &seans -> minute, &seans -> second);
+        int day, month, year, hour, minute, second;
+        unixtime_2date(st.st_mtime, &day, &month, &year,
+                       &hour, &minute, &second);
+
+        seans -> day = day;
+        seans -> month = month;
+        seans -> year = year;
+        seans -> hour = hour;
+        seans -> minute = minute;
+        seans -> second = second;
 
         seans -> nseans = header[12]*256+header[13];
         seans -> nr0 = 1463;

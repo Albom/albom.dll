@@ -6,14 +6,6 @@
 #ifndef _Included_myfiles
 #define _Included_myfiles
 
-#include <sys/types.h>
-#include <dirent.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdio.h>
-#include <ctype.h>
-#include <stdlib.h>
-
 
 #ifdef BUILD_DLL
     #define DLL_EXPORT __declspec(dllexport)

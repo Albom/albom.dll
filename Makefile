@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-O3 -Wall -std=c99 -DBUILD_DLL
+CFLAGS=-O3 -Wall -std=c99 -DBUILD_DLL -D_XOPEN_SOURCE=500
 LDFLAGS=-shared -static-libgcc -s
 SOURCES=$(wildcard src/*.c)
 OBJECTS=$(SOURCES:.c=.o)

@@ -3,6 +3,15 @@
  * Copyright 2011-2021, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/stat.h>
+
+#include "header.h"
+#include "integer.h"
+ 
 #include "file_c_old.h"
 
 
