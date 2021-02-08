@@ -3,7 +3,7 @@
  * Copyright 2011-2021, Oleksandr Bogomaz (o.v.bogomaz1985@gmail.com)
  */
 
-#include "seans3c3.h"
+#include "file_3c3.h"
 
 int seans3c3_load(char *filename, seans3c3_data *seans)
 {
