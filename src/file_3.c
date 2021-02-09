@@ -11,9 +11,9 @@ int seans3_load(char *filename, seans3_data *seans)
 {
 FILE *file;
 short  *tempw;
-int r, p; // развёртки, точки
+int r, p; // СЂР°Р·РІС‘СЂС‚РєРё, С‚РѕС‡РєРё
 unsigned short magic;
-int n; // текущая точка
+int n; // С‚РµРєСѓС‰Р°СЏ С‚РѕС‡РєР°
 
 file = fopen(filename, "rb");
 if (file == NULL)
@@ -35,7 +35,7 @@ seans -> nr = tempw[7];
 
 fread(&(seans -> freq), sizeof(double), 1, file);
 
-fread(&magic, sizeof(unsigned short), 1, file); // магическое число
+fread(&magic, sizeof(unsigned short), 1, file); // РјР°РіРёС‡РµСЃРєРѕРµ С‡РёСЃР»Рѕ
 seans -> magic = magic;
 
 if (seans->magic != 55899)
@@ -45,7 +45,7 @@ if (seans->magic != 55899)
     return ERR_MAGIC;
     }
 
-fread(tempw, sizeof(short), 4, file); // 8 байт пустого пространства
+fread(tempw, sizeof(short), 4, file); // 8 Р±Р°Р№С‚ РїСѓСЃС‚РѕРіРѕ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІР°
 
 free(tempw);
 

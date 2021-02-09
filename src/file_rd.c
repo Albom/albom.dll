@@ -11,8 +11,8 @@ int seansRd_load(char *filename, seansRd_data *seans)
 {
 FILE *file;
 short  *tempw;
-int r, p; // развёртки, точки
-int n; // текущая точка
+int r, p; // СЂР°Р·РІС‘СЂС‚РєРё, С‚РѕС‡РєРё
+int n; // С‚РµРєСѓС‰Р°СЏ С‚РѕС‡РєР°
 
 file = fopen(filename, "rb");
 if (file == NULL)
@@ -39,7 +39,7 @@ fread(&(seans -> lag), sizeof(double), 1, file);
 
 fread(&(seans -> freq), sizeof(double), 1, file);
 
-fread(tempw, sizeof(short), 5, file); // 10 байт пустого пространства
+fread(tempw, sizeof(short), 5, file); // 10 Р±Р°Р№С‚ РїСѓСЃС‚РѕРіРѕ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІР°
 
 free(tempw);
 

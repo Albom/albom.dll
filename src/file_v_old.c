@@ -36,9 +36,9 @@ int seans1v_load(char *filename, seans1v_data *seans) {
 
     char *buffer;
     unsigned char  header[20];
-    int mem_need; // сколько памяти нужно для буфера
+    int mem_need; // СЃРєРѕР»СЊРєРѕ РїР°РјСЏС‚Рё РЅСѓР¶РЅРѕ РґР»СЏ Р±СѓС„РµСЂР°
 
-    int isM; // есть ли метки?
+    int isM; // РµСЃС‚СЊ Р»Рё РјРµС‚РєРё?
 
     isM = seans1v_test(filename);
     if (isM == 0) {
@@ -46,19 +46,19 @@ int seans1v_load(char *filename, seans1v_data *seans) {
     }
 
     if (isM == 2) {
-        mem_need =  4*(230 + 230*2*10 + 230*2 + 230); // количество необходимой памяти для буфера (с учётом меток)
+        mem_need =  4*(230 + 230*2*10 + 230*2 + 230); // РєРѕР»РёС‡РµСЃС‚РІРѕ РЅРµРѕР±С…РѕРґРёРјРѕР№ РїР°РјСЏС‚Рё РґР»СЏ Р±СѓС„РµСЂР° (СЃ СѓС‡С‘С‚РѕРј РјРµС‚РѕРє)
     } else {
-        mem_need = 4*(230 + 230*2*10 + 230*2); // количество необходимой памяти для буфера
+        mem_need = 4*(230 + 230*2*10 + 230*2); // РєРѕР»РёС‡РµСЃС‚РІРѕ РЅРµРѕР±С…РѕРґРёРјРѕР№ РїР°РјСЏС‚Рё РґР»СЏ Р±СѓС„РµСЂР°
     }
 
-    buffer = (char*) malloc( mem_need ); // выделить память для буфера
+    buffer = (char*) malloc( mem_need ); // РІС‹РґРµР»РёС‚СЊ РїР°РјСЏС‚СЊ РґР»СЏ Р±СѓС„РµСЂР°
 
     file = fopen (filename, "rb");
     if (file == NULL) {
         return 0;
     }
 
-    fread(header, 20, 1, file); // считать заголовок файла
+    fread(header, 20, 1, file); // СЃС‡РёС‚Р°С‚СЊ Р·Р°РіРѕР»РѕРІРѕРє С„Р°Р№Р»Р°
 
     seans -> day = header[0]*256+header[1];
     seans -> month = header[2]*256+header[3];
@@ -74,7 +74,7 @@ int seans1v_load(char *filename, seans1v_data *seans) {
 
     seans -> u1 = header[18]*256+header[19];
 
-    fread(buffer, mem_need, 1, file); // считать данные в буфер
+    fread(buffer, mem_need, 1, file); // СЃС‡РёС‚Р°С‚СЊ РґР°РЅРЅС‹Рµ РІ Р±СѓС„РµСЂ
 
     fclose (file);
 
@@ -107,7 +107,7 @@ int seans1v_load(char *filename, seans1v_data *seans) {
 
 
 int seans1v_saveM0(char *filename) {
-    int isM; // есть ли метки?
+    int isM; // РµСЃС‚СЊ Р»Рё РјРµС‚РєРё?
     FILE *file;
 
     isM = seans1v_test(filename);
@@ -131,7 +131,7 @@ int seans1v_saveM0(char *filename) {
 
 
 int seans1v_saveM3(char *filename, seans1v_data *seans) {
-    int isM; // есть ли метки?
+    int isM; // РµСЃС‚СЊ Р»Рё РјРµС‚РєРё?
     FILE *file;
 
     isM = seans1v_test(filename);

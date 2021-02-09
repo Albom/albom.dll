@@ -23,7 +23,7 @@ extern "C"
 #endif
 DLL_EXPORT int razr_load(char *filename, double *array, int len);
 DLL_EXPORT int filter_load(char *filtername, double *array, int len);
-DLL_EXPORT double filter_freq_resp(char *filtername, double freq); // Frequency response (АЧХ). На входе - частота в герцах
+DLL_EXPORT double filter_freq_resp(char *filtername, double freq); // Frequency response (РђР§РҐ). РќР° РІС…РѕРґРµ - С‡Р°СЃС‚РѕС‚Р° РІ РіРµСЂС†Р°С…
 #ifdef __cplusplus
 }
 #endif

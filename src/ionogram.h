@@ -19,9 +19,9 @@ int hour;
 int minute;
 int second;
 
-int nr; // number of repeats (количество повторов на одной частоте)
-int nf; // number of frequencies (количество частот)
-int nh; // number of altitudes (количество высот)
+int nr; // number of repeats (РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРІС‚РѕСЂРѕРІ РЅР° РѕРґРЅРѕР№ С‡Р°СЃС‚РѕС‚Рµ)
+int nf; // number of frequencies (РєРѕР»РёС‡РµСЃС‚РІРѕ С‡Р°СЃС‚РѕС‚)
+int nh; // number of altitudes (РєРѕР»РёС‡РµСЃС‚РІРѕ РІС‹СЃРѕС‚)
 
 unsigned
 char data[16][400][250]; // nr, nf, nh

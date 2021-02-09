@@ -46,15 +46,15 @@ fread(&seans->magic, sizeof(short), 1, file);
 int temp;
 fread(&temp, sizeof(int), 1, file);
 
-buffer = (char*) malloc( bufferSize ); // выделить память для буфера
+buffer = (char*) malloc( bufferSize ); // РІС‹РґРµР»РёС‚СЊ РїР°РјСЏС‚СЊ РґР»СЏ Р±СѓС„РµСЂР°
 if (buffer == NULL)
     {
     fclose(file);
     return 0;
     }
 
-fread(buffer, bufferSize, 1, file); // считать данные в буфер
-fclose (file); // закрыть файл
+fread(buffer, bufferSize, 1, file); // СЃС‡РёС‚Р°С‚СЊ РґР°РЅРЅС‹Рµ РІ Р±СѓС„РµСЂ
+fclose (file); // Р·Р°РєСЂС‹С‚СЊ С„Р°Р№Р»
 
 for (i = 0; i < 680 ; i++)
 	for (j = 0; j < 114; j++)
@@ -84,7 +84,7 @@ for (i = 0; i < 680 ; i++)
 		sm += 8;
 		}
 
-// загрузка "нуля" АЦП
+// Р·Р°РіСЂСѓР·РєР° "РЅСѓР»СЏ" РђР¦Рџ
 for (i = 0; i < 680 ; i++)
 	{
 	memcpy( & seans -> dat01[i], buffer+sm, 8);
@@ -98,7 +98,7 @@ for (i = 0; i < 680 ; i++)
 	}
 
 
-// загрузка мощности по короткому импульсу
+// Р·Р°РіСЂСѓР·РєР° РјРѕС‰РЅРѕСЃС‚Рё РїРѕ РєРѕСЂРѕС‚РєРѕРјСѓ РёРјРїСѓР»СЊСЃСѓ
 
 for (i = 0; i < 680 ; i++)
 	{
@@ -112,7 +112,7 @@ for (i = 0; i < 680 ; i++)
 	sm += 8;
 	}
 
-// загрузка "нуля" АЦП
+// Р·Р°РіСЂСѓР·РєР° "РЅСѓР»СЏ" РђР¦Рџ
 
 for (i = 0; i < 680 ; i++)
 	{

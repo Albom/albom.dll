@@ -595,8 +595,8 @@ int acf_library_light_short_conv(FILE *f, int *temperatures, int temperatures_le
     if (len > nPoints)
         len = nPoints;
 
-    ti_int = ( (int)(floor(ti)) /20)*20; // округляем ti
-    te_int = ( (int)(floor(te)) /20)*20; // округляем te
+    ti_int = ( (int)(floor(ti)) /20)*20; // РѕРєСЂСѓРіР»В¤РµРј ti
+    te_int = ( (int)(floor(te)) /20)*20; // РѕРєСЂСѓРіР»В¤РµРј te
 
 
     for (i = 0; i < 2*temperatures_len-1; i+=2)
@@ -656,8 +656,8 @@ int acf_library_light_short(FILE *f, int *temperatures, int temperatures_len, do
     if (len > nPoints)
         len = nPoints;
 
-    ti_int = ( (int)(floor(ti)) /20)*20; // округляем ti
-    te_int = ( (int)(floor(te)) /20)*20; // округляем te
+    ti_int = ( (int)(floor(ti)) /20)*20; // РѕРєСЂСѓРіР»В¤РµРј ti
+    te_int = ( (int)(floor(te)) /20)*20; // РѕРєСЂСѓРіР»В¤РµРј te
 
 
     for (i = 0; i < 2*temperatures_len-1; i+=2)
@@ -727,8 +727,8 @@ int acf_library_oxygen(FILE *f, int *temperatures, int temperatures_len, double 
     if (len > nPoints)
         len = nPoints;
 
-    ti_int = ( (int)(floor(ti)) /10)*10; // округляем ti
-    te_int = ( (int)(floor(te)) /10)*10; // округляем te
+    ti_int = ( (int)(floor(ti)) /10)*10; // РѕРєСЂСѓРіР»В¤РµРј ti
+    te_int = ( (int)(floor(te)) /10)*10; // РѕРєСЂСѓРіР»В¤РµРј te
 
 
     for (i = 0; i < 2*temperatures_len-1; i+=2)
@@ -783,8 +783,8 @@ int acf_library_millstone(FILE *f, int *temperatures, int temperatures_len, doub
     if (len > nPoints)
         len = nPoints;
 
-    ti_int = ( (int)(floor(ti)) /20)*20; // округляем ti
-    te_int = ( (int)(floor(te)) /20)*20; // округляем te
+    ti_int = ( (int)(floor(ti)) /20)*20; // РѕРєСЂСѓРіР»В¤РµРј ti
+    te_int = ( (int)(floor(te)) /20)*20; // РѕРєСЂСѓРіР»В¤РµРј te
 
 
     for (i = 0; i < 2*temperatures_len-1; i+=2)
@@ -992,11 +992,11 @@ if ( (te < 200) || (te > 4000) )
 if ((te/ti < 0.5) || ((te/ti) > 3.5))
     return 0;
 
-if (len > 27) // в библиотеках хранятся 27 точек АКФ
+if (len > 27) // РІ Р±РёР±Р»РёРѕС‚РµРєР°С… С…СЂР°РЅВ¤С‚СЃВ¤ 27 С‚РѕС‡РµРє СВ вЂ
     len = 27;
 
-ti_int = ( (int)(floor(ti)) /10)*10; // округляем ti
-te_int = ( (int)(floor(te)) /10)*10; // округляем te
+ti_int = ( (int)(floor(ti)) /10)*10; // РѕРєСЂСѓРіР»В¤РµРј ti
+te_int = ( (int)(floor(te)) /10)*10; // РѕРєСЂСѓРіР»В¤РµРј te
 
 
 for (i = 0; i < 2*temperatures_len-1; i+=2)
