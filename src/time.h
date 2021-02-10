@@ -6,19 +6,18 @@
 #ifndef _Included_mytime
 #define _Included_mytime
 
-#include <time.h>
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
+#include <time.h>
 
 #ifdef BUILD_DLL
-    #define DLL_EXPORT __declspec(dllexport)
+#define DLL_EXPORT __declspec(dllexport)
 #else
-    #define DLL_EXPORT __declspec(dllimport)
+#define DLL_EXPORT __declspec(dllimport)
 #endif
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 DLL_EXPORT time_t date_2unixtime(int DD, int MM, int YY, int hh, int mm, int ss);
@@ -40,4 +39,4 @@ DLL_EXPORT int time_normalize(double *arr, int length);
 }
 #endif
 
-#endif // _Included_mytime
+#endif  // _Included_mytime

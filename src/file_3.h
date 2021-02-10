@@ -7,47 +7,44 @@
 #define _Included_seans3
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
-typedef struct __attribute__((packed))
-{
+typedef struct __attribute__((packed)) {
+    int day;
+    int month;
+    int year;
+    int hour;
+    int minute;
+    int second;
 
-int day;
-int month;
-int year;
-int hour;
-int minute;
-int second;
+    int np;
+    int nr;
 
-int np;
-int nr;
+    double freq;
 
-double freq;
+    int magic;
 
-int magic;
+    int *dat1;
+    int *dat2;
+    int *dat3;
+    int *dat4;
 
-int *dat1;
-int *dat2;
-int *dat3;
-int *dat4;
+} seans3_data;
 
-} seans3_data ;
-
-#define OK          (0)
-#define ERR_FILE    (1)
-#define ERR_MEM     (2)
-#define ERR_MAGIC   (3)
+#define OK (0)
+#define ERR_FILE (1)
+#define ERR_MEM (2)
+#define ERR_MAGIC (3)
 
 #ifdef BUILD_DLL
-    #define DLL_EXPORT __declspec(dllexport)
+#define DLL_EXPORT __declspec(dllexport)
 #else
-    #define DLL_EXPORT __declspec(dllimport)
+#define DLL_EXPORT __declspec(dllimport)
 #endif
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 DLL_EXPORT int seans3_load(char *filename, seans3_data *seans);
 DLL_EXPORT int seans3_close(seans3_data *seans);
@@ -55,4 +52,4 @@ DLL_EXPORT int seans3_close(seans3_data *seans);
 }
 #endif
 
-#endif // _Included_seans3
+#endif  // _Included_seans3

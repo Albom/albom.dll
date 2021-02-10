@@ -7,47 +7,39 @@
 #define _Included_ionogram
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
-typedef struct __attribute__((packed))
-{
-int day;
-int month;
-int year;
-int hour;
-int minute;
-int second;
+typedef struct __attribute__((packed)) {
+    int day;
+    int month;
+    int year;
+    int hour;
+    int minute;
+    int second;
 
-int nr; // number of repeats (количество повторов на одной частоте)
-int nf; // number of frequencies (количество частот)
-int nh; // number of altitudes (количество высот)
+    int nr;  // number of repeats (количество повторов на одной частоте)
+    int nf;  // number of frequencies (количество частот)
+    int nh;  // number of altitudes (количество высот)
 
-unsigned
-char data[16][400][250]; // nr, nf, nh
+    unsigned char data[16][400][250];  // nr, nf, nh
 
 } ionogram_basis;
 
 #ifdef BUILD_DLL
-    #define DLL_EXPORT __declspec(dllexport)
+#define DLL_EXPORT __declspec(dllexport)
 #else
-    #define DLL_EXPORT __declspec(dllimport)
+#define DLL_EXPORT __declspec(dllimport)
 #endif
-
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-
 DLL_EXPORT int ionogram_load(char *filename, ionogram_basis *ionogram);
-
 
 #ifdef __cplusplus
 }
 #endif
 
-
-#endif // _Included_ionogram
-
+#endif  // _Included_ionogram

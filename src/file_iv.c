@@ -5,12 +5,9 @@
 
 #include "file_iv.h"
 
-int seansIV_load(char *filename, seansIV_data *seans)
-{
-
+int seansIV_load(char *filename, seansIV_data *seans) {
     FILE *f = fopen(filename, "rb");
-    if (f == NULL)
-    {
+    if (f == NULL) {
         return ERR_FILE;
     }
 
@@ -22,11 +19,10 @@ int seansIV_load(char *filename, seansIV_data *seans)
 
     fseek(f, 44, SEEK_CUR);
 
-    seans->scans = malloc(7*seans->nR*sizeof(seansIV_scan));
-    for (int i = 0; i < 7*seans->nR; i++)
-    {
-        seans->scans[i].data1 = malloc(seans->nP*sizeof(short));
-        seans->scans[i].data2 = malloc(seans->nP*sizeof(short));
+    seans->scans = malloc(7 * seans->nR * sizeof(seansIV_scan));
+    for (int i = 0; i < 7 * seans->nR; i++) {
+        seans->scans[i].data1 = malloc(seans->nP * sizeof(short));
+        seans->scans[i].data2 = malloc(seans->nP * sizeof(short));
         fread(&seans->scans[i].type, 1, 1, f);
         fread(seans->scans[i].data1, sizeof(short), seans->nP, f);
         fread(seans->scans[i].data2, sizeof(short), seans->nP, f);
@@ -37,11 +33,8 @@ int seansIV_load(char *filename, seansIV_data *seans)
     return OK;
 }
 
-
-int seansIV_close(seansIV_data *seans)
-{
-    for (int i = 0; i < seans->nR; i++)
-    {
+int seansIV_close(seansIV_data *seans) {
+    for (int i = 0; i < seans->nR; i++) {
         free(seans->scans[i].data1);
         free(seans->scans[i].data2);
     }
